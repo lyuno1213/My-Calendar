@@ -8,10 +8,35 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+bootRun {
+    environment SPRING_PROFILES_ACTIVE: environment.SPRING_PROFILES_ACTIVE ?: 'local'
+}
+
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    implementation('org.springframework.boot:spring-boot-starter-validation')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    runtimeOnly('org.postgresql:postgresql')
+    implementation('io.github.wimdeblauwe:error-handling-spring-boot-starter:4.6.0')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
+    implementation('org.webjars:bootstrap:5.3.5')
+    developmentOnly('org.springframework.boot:spring-boot-docker-compose')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    implementation ('jakarta.validation:jakarta.validation-api:3.0.2')
+    implementation ('org.hibernate.validator:hibernate-validator:8.0.0.Final')
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
 }
